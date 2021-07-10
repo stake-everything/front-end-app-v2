@@ -11,7 +11,6 @@ export default function Home() {
           <Banner />
           <Main />
           <BottomNav />
-
     </div>
   )
 }

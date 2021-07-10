@@ -2,13 +2,13 @@ import styles from './../styles/Home.module.css';
 import {db} from './../config/config.js';
 import React from 'react';
 import Accord from './../components/Accordion';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import WebFont from 'webfontloader';
+import { FiLoader } from 'react-icons/fi';
+import { coinDataT, histDataT } from './../types';
 
 export default function App(){
 
-const [data,setData] = React.useState<object>({});
-const [historicData,setHistoricData] = React.useState<object>({});
+const [data,setData] = React.useState<coinDataT | null>(null);
+const [historicData,setHistoricData] = React.useState<histDataT | null>(null);
 const [query,setQuery] = React.useState<string>("");
 
 const loadData = (tag: string) => {
@@ -35,16 +35,14 @@ React.useEffect(() => {
   // WebFont.load({
   //   google: {
   //     families: ["Nunito"]
-  //   }
+  //  }
   // });
-
-
   return () => {
     console.log("cleanup")
   }
 }, [])
 
-const _filter = (data: any) => {
+const _filter = (data: coinDataT) => {
 if(query.length>0){
   let out = Object.fromEntries( Object.entries(data).filter( ([key,value]) => key.toLowerCase().includes( query.toLowerCase() ) ) );
   return out;
@@ -52,25 +50,23 @@ if(query.length>0){
 else{return data;}
 }
 
-
-if (data=={} || historicData=={}){
+if (data==null || historicData==null){
   return(
         <div className={styles["App"]}>
           <div>
-            <p>
-              Loading...
-            </p>
+            <FiLoader size={28} className={styles["icon-spin"]}/>
           </div>
         </div>
   );
 }
 else{
+
   return(
   <>
   <input
     type="text"
     value={query}
-    onInput={ e=>setQuery(e.target.value) }
+    onInput={ (event) => setQuery( (event.target as HTMLInputElement).value ) }
     id={styles["header-search"]}
     placeholder="Search..."
     name="s" 
