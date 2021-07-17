@@ -6,33 +6,8 @@ import { CgArrowTopRightR } from "react-icons/cg";
 import { FiPlus, FiMinus } from 'react-icons/fi';
 import LineChart from './hchart';
 import { coinDataT, histDataT, histDataCoinT, coinInfoT } from './../types';
+import Image from 'next/image';
 
-
-
-// interface coinInfoT{
-//   apy?: number,
-//   apr?: number,
-//   tag: string,
-//   token_earned: string,
-//   url: string,
-//   return?: number,
-// }
-
-// interface coinDataIndT{
-//   image_uri?: string,
-//   info: coinInfoT[]
-// }
-
-// interface histDataCoinT{
-//    [index: string]: number[][]
-// }
-
-// interface histDataT{
-//   [index: string]: histDataCoinT
-// }
-
-
-////////////
 
 interface AccordPropsT{
   data: coinDataT,
@@ -75,10 +50,7 @@ const style1={}
 const style2 = {backgroundColor:"#118ab2",padding:"0.5%",borderRadius:"4px"}
 
 const InsideListElementData = (props: {data:coinInfoT} ): JSX.Element =>{
-  //site={ind_site.site} url={ind_site.url} token_earned={ind_site.token_earned} apry={ ind_site.apr ? "APR" : "APY" } apry_val={ ind_site.apr ? ind_site.apr : ind_site.apy } />
-  
-  console.log("inside list el")
-  console.log(props)
+
   let data: coinInfoT = props.data;
   let retType: string = data.apr ? "APR" : "APY";
   //needs to be fixed
@@ -99,11 +71,7 @@ const InsideListElementData = (props: {data:coinInfoT} ): JSX.Element =>{
       </div>
   );}
 
-const DropdownListGroup = (props: DropListPropsT): JSX.Element => {
-
-  
-  console.log( "inside ddlg" )
-  console.log( props )  
+const DropdownListGroup = (props: DropListPropsT): JSX.Element => {  
 
   let INFO: coinInfoT[] = props.info;
 
@@ -119,7 +87,7 @@ const DropdownListGroup = (props: DropListPropsT): JSX.Element => {
     );
     
     return(
-        <ul className={styles["Dd-list"]}>coinInfoT
+        <ul className={styles["Dd-list"]}>
             {listItems}
         </ul>
     );
@@ -166,10 +134,10 @@ const Accordion = ( props: AccordPropsT): JSX.Element => {
                 <div className={styles["Wrap"]} onClick={() => toggle(index)} key={index}>
                  <div className={styles["Coin-logo"]}>
                     <img
-                        alt=""
+                        alt=" "
                         src={data[item].image_uri}
-                        width="22"
-                        height="22"
+                        width="28"
+                        height="28"
                     />
                   <h6 className={styles["Coin-title"]}><b>{item} - { avg_return( data[item]["info"] ) }%  </b></h6>
                  </div>
@@ -179,7 +147,7 @@ const Accordion = ( props: AccordPropsT): JSX.Element => {
                 {clicked === index ? (
                       <DropdownListGroup info={ data[item]["info"] } 
                                          _item={item} 
-                                         histData={histData[item]} />
+                                         histData={histData} />
                 ) : null}
                 </div>
               </>

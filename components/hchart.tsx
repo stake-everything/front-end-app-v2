@@ -1,14 +1,20 @@
 import { Line,defaults } from 'react-chartjs-2';
 import styles from './../styles/Home.module.css';
+import _ from 'lodash';
 
 defaults.font.family = "Nunito";
 
 
 const LineChart = (props) => {
 
+    
+    console.log(props)
+    let l=14
     let hdata=props.histData;
     let item=props._item;
     let tag=props.tag;
+    let days = _.range(l)
+    days = days.map( (n)=>(n+1).toString() )
     let keys = Object.keys( hdata );
     let _data=null;
     if (keys.includes(tag)){ _data=hdata[tag] }
@@ -17,11 +23,11 @@ const LineChart = (props) => {
 
       if (_data[item].values.length>6){
         const data = {
-          labels: ['1', '2', '3', '4', '5', '6', '7'],
+          labels: days,
           datasets: [
             {
               label: 'Daily Avg Return',
-              data: _data[item].values.slice(-7),
+              data: _data[item].values.slice(-l),
               fill: false,
               backgroundColor: 'rgb(255, 99, 132)',
               borderColor: 'rgba(255, 99, 132, 0.2)',
