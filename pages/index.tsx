@@ -21,12 +21,13 @@ function Spinner() {
 );
 }
 
-export default function Home() {
+export default function App() {
 
   const [data,setData] = React.useState<coinDataT | null>(null);
   const [hData,setHistoricData] = React.useState<histDataT | null>(null);
   const [query,setQuery] = React.useState<string>("");
 
+  
   const _filter = (data: coinDataT) => {
     if(query.length>0){
       let out = Object.fromEntries( Object.entries(data).filter( ([key,value]) => key.toLowerCase().includes( query.toLowerCase() ) ) );
@@ -35,20 +36,28 @@ export default function Home() {
     else{return data;}
     }
 
-  const DataComp =()=> {
+  const Input = ({query}) => {
+    return(
+      <input
+      key="jimbo1"
+      type="text"
+      value={query}
+      onChange={ (event) => setQuery( (event.target as HTMLInputElement).value ) }
+      id={styles["header-search"]}
+      placeholder="Search..asdsfd."
+      name="s" 
+      autoComplete="off"
+      autoFocus={true}
+    />
+    );
+  }
+
+  const DataList =()=> {
     return(  
     <>
-      <input
-        type="text"
-        value={query}
-        onInput={ (event) => setQuery( (event.target as HTMLInputElement).value ) }
-        id={styles["header-search"]}
-        placeholder="Search..."
-        name="s" 
-        autoComplete="off"
-      />
+      <Input query={query}/>
       <Accord data={ _filter(data) } histData={hData} />
-      </>
+    </>
       );
   }
 
@@ -81,7 +90,7 @@ export default function Home() {
   return (
     <div className={ (data==null || hData==null) ? styles.Main0 : styles.Main1 }>
           <Banner />
-          { (data==null || hData==null) ? <Spinner /> : <DataComp />}
+          { (data==null || hData==null) ? <Spinner /> : <DataList />}
           <BottomNav />
     </div>
   )
