@@ -44,7 +44,7 @@ export default function App() {
       value={query}
       onChange={ (event) => setQuery( (event.target as HTMLInputElement).value ) }
       id={styles["header-search"]}
-      placeholder="Search..asdsfd."
+      placeholder="Search..."
       name="s" 
       autoComplete="off"
       autoFocus={true}
