@@ -24,8 +24,6 @@ describe("App", async ()=>{
             
             expect(bannerHeader).to.equal(BANNER_HEADER);
             expect(bannerMessage).to.equal(BANNER_MESSAGE);
-            
-            //await driver.quit();
 
             }
             catch(err){console.log(err);}
@@ -54,14 +52,13 @@ describe("App", async ()=>{
 
             await second_el.click();
             let chart = await driver.findElement( App.canvas );
-
-            //console.log("to", typeof chart )
-
             expect( chart ).to.be.a( 'object' );
 
-            //await driver.quit();
             }
             catch(err){console.log(err);}
+            finally{
+                await driver.quit();
+            }
     });
 
 })
